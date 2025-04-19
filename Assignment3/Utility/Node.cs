@@ -7,10 +7,12 @@ using System.Threading.Tasks;
 
 namespace Assignment3.Utility
 {
+    [DataContract]
     public class Node
     {
+        [DataMember]
         public User Value { get; set; }
-
+        [DataMember]
         public Node Next { get; set; }
 
         public Node(User value)

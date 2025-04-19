@@ -1,17 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
+
 
 namespace Assignment3
 {
+    [DataContract]
     public class User : IEquatable<User>
     {
+        [DataMember]
         public int Id { get; private set; }
+        [DataMember]
         public string Name { get; private set; }
+        [DataMember]
         public string Email { get; private set; }
-
+        [DataMember]
         public string Password { get; private set; }
 
         /// <summary>
@@ -37,25 +41,17 @@ namespace Assignment3
         public bool IsCorrectPassword(string input)
         {
             if (string.IsNullOrEmpty(Password) == string.IsNullOrEmpty(input))
-                // Return true if both input and password are null or empty
                 return true;
             else if (string.IsNullOrEmpty(Password) != string.IsNullOrEmpty(input))
-                // Return false if input or password is null or empty (not both)
                 return false;
             else
-                // Otherwise, check if input and Password match.
                 return Password.Equals(input);
         }
 
-        /// <summary>
-        /// Checks if object is equal to another object.
-        /// </summary>
-        /// <param name="obj">Other object</param>
-        /// <returns>True of this object is equal to other object</returns>
-        public override bool Equals(Object other)
+        public override bool Equals(object other)
         {
             if (!(other is User otherUser))
-			    return false;
+                return false;
 
             return Id == otherUser.Id && Name.Equals(otherUser.Name) && Email.Equals(otherUser.Email);
         }
@@ -69,10 +65,6 @@ namespace Assignment3
                    Password == other.Password;
         }
 
-        /// <summary>
-        /// Generates unique ID for User object
-        /// </summary>
-        /// <returns>Unique hash code/ID</returns>
         public override int GetHashCode()
         {
             int hashCode = 825453597;

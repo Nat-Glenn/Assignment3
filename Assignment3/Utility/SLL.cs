@@ -1,18 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.IO;
 using System.Runtime.Serialization;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Linq;
 
 namespace Assignment3.Utility
 {
-
+    [DataContract]
     public class SLL : ILinkedListADT
     {
         private Node head;
-
         private int size;
 
         public SLL()
@@ -21,6 +17,32 @@ namespace Assignment3.Utility
             size = 0;
         }
 
+       
+        [DataMember]
+        public List<User> Users
+        {
+            get
+            {
+                List<User> userList = new List<User>();
+                Node current = head;
+                while (current != null)
+                {
+                    userList.Add(current.Value);
+                    current = current.Next;
+                }
+                return userList;
+            }
+            set
+            {
+                Clear();
+                foreach (User user in value)
+                {
+                    AddLast(user);
+                }
+            }
+        }
+
+       
         public bool IsEmpty() => size == 0;
 
         public void Clear()
@@ -167,7 +189,7 @@ namespace Assignment3.Utility
                     return i;
                 current = current.Next;
             }
-            return -1;
+            return -1; // Not found
         }
 
         public bool Contains(User value)
@@ -189,4 +211,4 @@ namespace Assignment3.Utility
             head = prev;
         }
     }
-    }
+}
